@@ -1,11 +1,11 @@
 import mysql from 'mysql2/promise';
 
 const config = {
-    host: process.env.MYSQLHOST || 'localhost',
-    port: process.env.MYSQLPORT || 3306,
-    user: process.env.MYSQLUSER || 'root',
-    password: process.env.MYSQLPASSWORD || '',
-    database: process.env.MYSQLDATABASE || 'prototipo_5s',
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 3306,
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'prototipo_5s',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0

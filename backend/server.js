@@ -9,7 +9,11 @@ import crypto from 'crypto';
 const app = express();
 
 // ===== Middlewares =====
-app.use(cors());
+app.use(cors({
+    origin: '*',  // Permite conexiones desde cualquier URL (útil para Render)
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 
@@ -175,8 +179,11 @@ app.post('/api/auth/login', async (req, res) => {
 
         const usuario = usuariosResult[0];
 
-        // TEMPORAL: aceptar cualquier contraseña para pruebas
-        const passwordValida = true;
+        // VERIFICACIÓN REAL DE CONTRASEÑA (ARREGLADO)
+        const passwordValida = await bcrypt.compare(password, usuario.password);
+        if (!passwordValida) {
+            return res.status(401).json({ success: false, error: 'Credenciales inválidas' });
+        }
 
         const token = generarToken({ 
             id: usuario.id, 
@@ -496,8 +503,8 @@ app.post('/api/pagos/crear-preferencia', verificarToken, async (req, res) => {
 
 app.use((_req, res) => res.status(404).json({ success: false, error: "Ruta no encontrada" }));
 
-const PORT = 4000;
-app.listen(PORT, () => console.log(`✅ Servidor backend corriendo en http://localhost:${PORT}`));
-
+// ===== SERVIDOR - CONFIGURADO PARA RENDER =====
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, '0.0.0.0', () => console.log(`✅ Servidor backend corriendo en el puerto ${PORT}`));
 
 

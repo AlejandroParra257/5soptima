@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     // Función para verificar si el token es válido
     const verificarToken = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/auth/verify', {
+            const response = await fetch('https://fivesoptima.onrender.com/api/auth/verify', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     // Función para iniciar sesión
     const login = async (email, password) => {
         try {
-            const response = await fetch('http://localhost:4000/api/auth/login', {
+            const response = await fetch('https://fivesoptima.onrender.com/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }) => {
     // Función para registrarse
     const register = async (nombre, email, password) => {
         try {
-            const response = await fetch('http://localhost:4000/api/auth/register', {
+            const response = await fetch('https://fivesoptima.onrender.com/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nombre, email, password })
